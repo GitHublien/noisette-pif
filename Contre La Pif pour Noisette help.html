@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le combat de Noisette contre la PIF</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 0, 0, 0.05) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(0, 0, 255, 0.05) 0%, transparent 30%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff3333;
+            text-align: center;
+            text-shadow: 0 0 10px #ff3333, 0 0 20px #ff3333, 0 0 30px #ff3333;
+            animation: pulsateRed 1.5s infinite alternate;
+        }
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #3333ff;
+            text-align: center;
+            text-shadow: 0 0 10px #3333ff, 0 0 20px #3333ff, 0 0 30px #3333ff;
+            animation: pulsateBlue 1.5s infinite alternate;
+        }
+        @keyframes pulsateRed {
+            0% { text-shadow: 0 0 10px #ff3333, 0 0 20px #ff3333, 0 0 30px #ff3333; }
+            100% { text-shadow: 0 0 20px #ff3333, 0 0 30px #ff3333, 0 0 40px #ff3333; }
+        }
+        @keyframes pulsateBlue {
+            0% { text-shadow: 0 0 10px #3333ff, 0 0 20px #3333ff, 0 0 30px #3333ff; }
+            100% { text-shadow: 0 0 20px #3333ff, 0 0 30px #3333ff, 0 0 40px #3333ff; }
+        }
+        .collage {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            aspect-ratio: 1 / 1;
+        }
+        .image-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(51, 51, 255, 0.7);
+        }
+        img, video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: filter 0.3s ease;
+        }
+        .image-container:hover img,
+        .image-container:hover video {
+            filter: brightness(1.2);
+        }
+        .caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #ffffff;
+            padding: 10px;
+            font-size: 14px;
+            text-align: center;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        .image-container:hover .caption {
+            transform: translateY(0);
+        }
+        .treatment-info {
+            background-color: rgba(51, 51, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .treatment-info::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, rgba(51, 51, 255, 0.1), transparent 30%);
+            animation: rotate 4s linear infinite;
+        }
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+        p {
+            line-height: 1.8;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+        .neon-button {
+            font-family: 'Orbitron', sans-serif;
+            display: inline-block;
+            padding: 15px 30px;
+            color: #3333ff;
+            background-color: transparent;
+            border: 2px solid #3333ff;
+            border-radius: 5px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        .neon-button:hover {
+            background-color: #3333ff;
+            color: #ffffff;
+            box-shadow: 0 0 20px #3333ff;
+        }
+        .neon-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(51, 51, 255, 0.4), transparent);
+            transition: all 0.5s;
+        }
+        .neon-button:hover::before {
+            left: 100%;
+        }
+        #fullscreen-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+        }
+        #fullscreen-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 90%;
+            height: 90%;
+        }
+        #fullscreen-image, #fullscreen-video {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        #fullscreen-caption {
+            color: white;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        #close-fullscreen {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        @media (max-width: 600px) {
+            .collage {
+                grid-template-columns: 1fr;
+            }
+            h1, h2 {
+                font-size: 1.5em;
+            }
+            .treatment-info {
+                padding: 20px;
+            }
+        }
+        #musicControl {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: rgba(51, 51, 255, 0.7);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Le combat désespéré de Noisette contre la PIF</h1>
+        <div class="collage">
+            <div class="image-container" onclick="openFullscreen('https://i.imgur.com/0Yni9GJ.jpeg', 'image', 'Noisette, pétillante de vie, d\'une énergie vivifiante. Sa beauté, pure et éclatante, avant que la PIF ne vienne ternir son éclat.')" aria-label="Ouvrir l'image de Noisette en pleine santé">
+                <img src="https://i.imgur.com/0Yni9GJ.jpeg" alt="Noisette en pleine santé">
+                <div class="caption">Noisette, pétillante de vie, d'une énergie vivifiante. Sa beauté, pure et éclatante, avant que la PIF ne vienne ternir son éclat.</div>
+            </div>
+            <div class="image-container" onclick="openFullscreen('https://i.imgur.com/NWTslAC.jpeg', 'image', 'Son regard vif et curieux est le reflet d\'une santé resplendissante et d\'une vitalité débordante avant la PIF.')" aria-label="Ouvrir l'image de Noisette en bonne santé">
+                <img src="https://i.imgur.com/NWTslAC.jpeg" alt="Noisette en bonne santé">
+                <div class="caption">Son regard vif et curieux est le reflet d'une santé resplendissante et d'une vitalité débordante avant la PIF.</div>
+            </div>
+            <div class="image-container" onclick="openFullscreen('https://i.imgur.com/kXGUoYt.jpeg', 'image', 'Noisette, affaiblie par la PIF, mais toujours aussi courageuse.')" aria-label="Ouvrir l'image de Noisette malade">
+                <img src="https://i.imgur.com/kXGUoYt.jpeg" alt="Noisette malade">
+                <div class="caption">Noisette, affaiblie par la PIF, mais toujours aussi courageuse.</div>
+            </div>
+            <div class="image-container" onclick="openFullscreen('https://i.imgur.com/goXUNVG.jpeg', 'image', 'Le regard de Noisette reflète sa lutte contre la maladie.')" aria-label="Ouvrir l'image de Noisette fatiguée">
+                <img src="https://i.imgur.com/goXUNVG.jpeg" alt="Noisette fatiguée">
+                <div class="caption">Le regard de Noisette reflète sa lutte contre la maladie.</div>
+            </div>
+            <div class="image-container" onclick="openFullscreen('https://i.imgur.com/scEBLbk.jpeg', 'image', 'Ses petits yeux s\'étiolent, pourtant, Noisette poursuit inlassablement sa bataille.')" aria-label="Ouvrir l'image de Noisette courageuse">
+                <img src="https://i.imgur.com/scEBLbk.jpeg" alt="Noisette courageuse">
+                <div class="caption">Ses petits yeux s'étiolent, pourtant, Noisette poursuit inlassablement sa bataille.</div>
+            </div>
+            <div class="image-container" onclick="openFullscreen('https://i.imgur.com/glmEJwL.mp4', 'video', 'Frêle mais déterminée, elle lutte contre les affres de la PIF, se léchant, chez le vétérinaire comme à la maison.')" aria-label="Ouvrir la vidéo de Noisette luttant contre la PIF">
+                <video>
+                    <source src="https://i.imgur.com/glmEJwL.mp4" type="video/mp4">
+                    Votre navigateur ne supporte pas la lecture de vidéos.
+                </video>
+                <div class="caption">Frêle mais déterminée, elle lutte contre les affres de la PIF, se léchant, chez le vétérinaire comme à la maison.</div>
+            </div>
+        </div>
+        <div class="treatment-info">
+            <h2>Le combat de Noisette</h2>
+            <p>Noisette, notre rayon de soleil félin, se bat aujourd'hui pour sa vie. La péritonite infectieuse féline (PIF), cette maladie cruelle et impitoyable, a volé sa joie de vivre et son énergie débordante. Là où autrefois elle bondissait et jouait sans fin, elle lutte maintenant pour chaque respiration, chaque instant d'éveil.</p>
+            <p>Son regard, jadis pétillant de malice, est aujourd'hui voilé par la souffrance. Chaque caresse sur son pelage autrefois soyeux nous rappelle à quel point elle a maigri, à quel point cette maladie la consume jour après jour. Mais dans ses yeux, malgré la douleur, brille encore une étincelle de vie, un appel silencieux à l'aide.</p>
+            <p>Le traitement est notre seul espoir, notre unique chance de lui offrir un avenir. Chaque dose de médicament est comme une bouée de sauvetage lancée dans l'océan de sa maladie. Mais ce traitement, si vital, est aussi terriblement coûteux. Chaque jour qui passe est une bataille non seulement contre la PIF, mais aussi contre le temps et nos ressources qui s'amenuisent.</p>
+            <p>Nous implorons votre aide, votre compassion. Chaque don, aussi modeste soit-il, est un pas de plus vers la guérison de Noisette. C'est une promesse d'un jour meilleur, d'un jour où nous reverrons peut-être notre petite guerrière jouer, courir, et vivre pleinement comme avant.</p>
+            <p>Noisette ne peut pas parler, mais si elle le pouvait, elle vous dirait à quel point elle veut vivre, à quel point elle a besoin de votre soutien. Chaque seconde compte dans cette course contre la montre. Votre générosité aujourd'hui pourrait être le miracle dont Noisette a désespérément besoin pour voir un nouveau printemps.</p>
+            <p>S'il vous plaît, aidez-nous à sauver Noisette. Ensemble, nous pouvons lui donner une chance de vaincre cette terrible maladie et de retrouver la vie heureuse qu'elle mérite tant.</p>
+            <a href="https://www.leetchi.com/fr/c/ensemble-pou-noisette-face-a-la-pif-chaque-euro-la-rapproche-de-la-vie-1534332?utm_source=copylink&utm_medium=social_sharing" class="neon-button" aria-label="Faire un don pour Noisette">Faire un don pour Noisette</a>
+        </div>
+    </div>
+
+    <div id="fullscreen-container">
+        <span id="close-fullscreen" onclick="closeFullscreen()" aria-label="Fermer l'image en plein écran">&times;</span>
+        <div id="fullscreen-content"></div>
+    </div>
+
+    <audio id="backgroundMusic" loop>
+        <source src="https://www.dropbox.com/scl/fi/jstk38w4m1ahcmsgq8xi4/Le-combat-de-Noisette.mp3?rlkey=x8jemnduj43qghwom5x4g2tno&st=kfqx21ba&dl=1" type="audio/mpeg">
+        Votre navigateur ne supporte pas l'élément audio.
+    </audio>
+
+    <button id="musicControl" onclick="toggleMusic()">Musique Off</button>
+
+    <script>
+        function openFullscreen(src, type, caption) {
+            const container = document.getElementById('fullscreen-container');
+            const content = document.getElementById('fullscreen-content');
+            container.style.display = 'flex';
+            if (type === 'image') {
+                content.innerHTML = `
+                    <img id="fullscreen-image" src="${src}" alt="Image en plein écran">
+                    <div id="fullscreen-caption">${caption}</div>
+                `;
+            } else if (type === 'video') {
+                content.innerHTML = `
+                    <video id="fullscreen-video" controls autoplay>
+                        <source src="${src}" type="video/mp4">
+                        Votre navigateur ne supporte pas la lecture de vidéos.
+                    </video>
+                    <div id="fullscreen-caption">${caption}</div>
+                `;
+            }
+        }
+
+        function closeFullscreen() {
+            const container = document.getElementById('fullscreen-container');
+            container.style.display = 'none';
+        }
+
+        // Empêcher la fermeture lors du clic sur le contenu
+        document.getElementById('fullscreen-content').addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Fermer le plein écran en cliquant en dehors de l'image
+        document.getElementById('fullscreen-container').addEventListener('click', closeFullscreen);
+
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        let musicPlaying = false;
+        const musicControl = document.getElementById('musicControl');
+
+        function toggleMusic() {
+            if (musicPlaying) {
+                backgroundMusic.pause();
+                musicControl.textContent = 'Musique Off';
+            } else {
+                backgroundMusic.play();
+                musicControl.textContent = 'Musique On';
+            }
+            musicPlaying = !musicPlaying;
+        }
+    </script>
+</body>
+</html>
